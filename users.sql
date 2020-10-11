@@ -3,10 +3,10 @@ CREATE DATABASE  IF NOT EXISTS `movies-ratings`;
  DROP TABLE IF EXISTS `movies-ratings`.`users`;
 
  CREATE TABLE `movies-ratings`.`users`(
- user_id INT PRIMARY KEY,
+ user_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
  first_name VARCHAR(50)  NOT NULL,
  last_name VARCHAR(50)  NOT NULL
- );
+ )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
  INSERT INTO `movies-ratings`.`users` VALUES
  (1, 'Piotr', 'Sumara'),
