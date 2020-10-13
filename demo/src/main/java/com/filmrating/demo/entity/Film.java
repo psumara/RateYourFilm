@@ -2,13 +2,11 @@ package com.filmrating.demo.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-@Entity(name = "films")
+@Entity
 @Table(name = "films")
-public class Films {
+public class Film {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,17 +18,19 @@ public class Films {
     @Column(name = "release_year")
     private int release_year;
 
-    @ManyToOne
-    @JoinColumn(name = "")
+    @OneToMany(mappedBy = "film",
+               cascade = {CascadeType.MERGE, CascadeType.DETACH,
+                    CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Rating> ratings;
 
-    public Films(){}
+    public Film(){}
 
-    public Films(String title, int release_year) {
+    public Film(String title, int release_year) {
         this.title = title;
         this.release_year = release_year;
     }
 
-    public Films(int id, String title, int release_year) {
+    public Film(int id, String title, int release_year) {
         this.id = id;
         this.title = title;
         this.release_year = release_year;
@@ -67,5 +67,24 @@ public class Films {
                 ", title='" + title + '\'' +
                 ", release_year=" + release_year +
                 '}';
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public void add(Rating tempRating){
+
+        if(ratings == null) {
+            ratings = new ArrayList<>();
+        }
+
+        ratings.add(tempRating);
+
+        tempRating.setFilm(this);
     }
 }

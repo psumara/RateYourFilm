@@ -1,12 +1,14 @@
 package com.filmrating.demo.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name = "users")
 @Table(name = "users")
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,15 +20,19 @@ public class Users {
     @Column(name = "last_name")
     private String lastName;
 
+    @OneToMany(mappedBy = "user",
+            cascade = {CascadeType.MERGE, CascadeType.DETACH,
+                    CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Rating> ratings;
 
-    public Users(){}
+    public User(){}
 
-    public Users(String firstName, String lastName) {
+    public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Users(int id, String firstName, String lastName) {
+    public User(int id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -63,5 +69,24 @@ public class Users {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public void add(Rating tempRating){
+
+        if(ratings == null) {
+            ratings = new ArrayList<>();
+        }
+
+        ratings.add(tempRating);
+
+        tempRating.setUser(this);
     }
 }

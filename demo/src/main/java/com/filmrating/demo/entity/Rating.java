@@ -4,9 +4,9 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "ratings")
+@Entity
 @Table(name = "ratings")
-public class Ratings {
+public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,26 +15,28 @@ public class Ratings {
     @Column(name = "rating")
     private int rating;
 
-    @ManyToMany
-    @PrimaryKeyJoinColumn(name = "user_id")
-    private Set<Users> users = new HashSet<>();
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH,
+                            CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "film_id")
+    private Film film;
 
-    @ManyToMany
-    @PrimaryKeyJoinColumn(name = "film_id")
-    private Set<Films> movies = new HashSet<>();
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Films films;
 
-    public Ratings() {
+    public Rating() {}
+
+    public Rating(int rating, Film film) {
+        this.rating = rating;
+        this.film = film;
     }
 
-    public Ratings(int id, int rating, Set<Users> users, Set<Films> movies, Films films) {
+    public Rating(int id, int rating, Film film) {
         this.id = id;
         this.rating = rating;
-        this.users = users;
-        this.movies = movies;
-        this.films = films;
+        this.film = film;
     }
 
     public int getId() {
@@ -53,38 +55,27 @@ public class Ratings {
         this.rating = rating;
     }
 
-    public Set<Users> getUsers() {
-        return users;
+    public Film getFilm() {
+        return film;
     }
 
-    public void setUsers(Set<Users> users) {
-        this.users = users;
+    public void setFilm(Film film) {
+        this.film = film;
     }
 
-    public Set<Films> getMovies() {
-        return movies;
+    public User getUser() {
+        return user;
     }
 
-    public void setMovies(Set<Films> movies) {
-        this.movies = movies;
-    }
-
-    public Films getFilms() {
-        return films;
-    }
-
-    public void setFilms(Films films) {
-        this.films = films;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public String toString() {
-        return "Ratings{" +
+        return "Rating{" +
                 "id=" + id +
                 ", rating=" + rating +
-                ", users=" + users +
-                ", movies=" + movies +
-                ", films=" + films +
                 '}';
     }
 }

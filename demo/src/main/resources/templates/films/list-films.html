@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,17 +15,46 @@
 <body>
 
 <div class="container">
+    <!-- LOGOUT BUTTON -->
+    <form action="#" th:action="@{/logout}"
+          method="POST">
+
+        <input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
+
+    </form>
 
     <h3>List of films</h3>
     <hr>
 
     <!-- Add button -->
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a th:href="@{/films/showFormForAdd}"
+           class="btn btn-primary btn-sm mb-3">
+            Add Film
+        </a>
+    </div>
+
+    <!-- Add search button -->
+    <form th:action="@{/films/list}" action="search" method="GET">
+        <input id="txtSearch" type="text" name="keyword">
+        <button type="submit">Search</button>
+        <button type="button" onclick="clearSearch()">Clear</button>
+    </form>
+
+    <script type="text/javascript">
+        function clearSearch() {
+            window.location = "[[@{/films/list}]]";
+        }
+    </script>
+
 
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
             <th>Title</th>
             <th>Release Year</th>
+            <th>Action</th>
+
         </tr>
         </thead>
 
@@ -32,7 +63,28 @@
 
             <td th:text="${tempFilm.title}" />
             <td th:text="${tempFilm.release_year}" />
+            <td>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
 
+
+                    <a th:href="@{/films/showFormForUpdate(filmId=${tempFilm.id})}"
+                       class="btn btn-info btn-sm">
+                        Update
+                    </a>
+
+                    <a th:href="@{/films/delete(filmId=${tempFilm.id})}"
+                       class="btn btn-danger btn-sm"
+                       onclick="if (!(confirm('Are you sure?'))) return false">
+                        Delete
+                    </a>
+                </div>
+                <div sec:authorize="hasRole('ROLE_USER')">
+
+                    <a th:href="@{/films/showFormForRate(filmId=${tempFilm.id})}"
+                       class="btn btn-warning">
+                        Rate
+                    </a>
+                </div>
             </td>
         </tr>
 
