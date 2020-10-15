@@ -37,8 +37,8 @@ public class FilmServiceImpl implements FilmService{
             theFilm = result.get();
         }
         else {
-            // we didn't find the employee
-            throw new RuntimeException("Did not find employee id - " + theId);
+
+            throw new RuntimeException("Did not find film id - " + theId);
         }
 
         return theFilm;

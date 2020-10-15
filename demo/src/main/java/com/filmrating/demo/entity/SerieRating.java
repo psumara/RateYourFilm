@@ -1,12 +1,10 @@
 package com.filmrating.demo.entity;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "ratings")
-public class Rating {
+@Table(name = "series_ratings")
+public class SerieRating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,26 +15,31 @@ public class Rating {
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH,
                             CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "film_id")
-    private Film film;
+    @JoinColumn(name = "serie_id")
+    private Serie serie;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH,
             CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user;
 
+    public SerieRating() {}
 
-    public Rating() {}
-
-    public Rating(int rating, Film film) {
+    public SerieRating(int rating, Serie serie) {
         this.rating = rating;
-        this.film = film;
+        this.serie = serie;
     }
 
-    public Rating(int id, int rating, Film film) {
+    public SerieRating(int id, int rating, Serie serie) {
         this.id = id;
         this.rating = rating;
-        this.film = film;
+        this.serie = serie;
+    }
+
+    public SerieRating(int rating, Serie serie, User user) {
+        this.rating = rating;
+        this.serie = serie;
+        this.user = user;
     }
 
     public int getId() {
@@ -47,20 +50,20 @@ public class Rating {
         this.id = id;
     }
 
-    public int getRating() {
+    public int getSerieRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setSerieRating(int rating) {
         this.rating = rating;
     }
 
-    public Film getFilm() {
-        return film;
+    public Serie getSerie() {
+        return serie;
     }
 
-    public void setFilm(Film film) {
-        this.film = film;
+    public void setSerie(Serie serie) {
+        this.serie = serie;
     }
 
     public User getUser() {
@@ -73,7 +76,7 @@ public class Rating {
 
     @Override
     public String toString() {
-        return "Rating{" +
+        return "SerieRating{" +
                 "id=" + id +
                 ", rating=" + rating +
                 '}';

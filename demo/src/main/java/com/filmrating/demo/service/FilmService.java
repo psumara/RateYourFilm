@@ -11,7 +11,7 @@ public interface FilmService {
 
     public Film findById(int theId);
 
-    public void save(Film theEmployee);
+    public void save(Film theFilm);
 
     public void deleteById(int theId);
 

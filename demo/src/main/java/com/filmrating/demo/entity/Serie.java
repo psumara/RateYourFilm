@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "films")
-public class Film {
+@Table(name = "series")
+public class Serie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,19 +18,19 @@ public class Film {
     @Column(name = "release_year")
     private int release_year;
 
-    @OneToMany(mappedBy = "film",
+    @OneToMany(mappedBy = "serie",
                cascade = {CascadeType.MERGE, CascadeType.DETACH,
                     CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<FilmRating> filmRatings;
+    private List<SerieRating> serieRatings;
 
-    public Film(){}
+    public Serie(){}
 
-    public Film(String title, int release_year) {
+    public Serie(String title, int release_year) {
         this.title = title;
         this.release_year = release_year;
     }
 
-    public Film(int id, String title, int release_year) {
+    public Serie(int id, String title, int release_year) {
         this.id = id;
         this.title = title;
         this.release_year = release_year;
@@ -62,29 +62,30 @@ public class Film {
 
     @Override
     public String toString() {
-        return "Films{" +
+        return "Serie{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", release_year=" + release_year +
+                ", serieRatings=" + serieRatings +
                 '}';
     }
 
-    public List<FilmRating> getRatings() {
-        return filmRatings;
+    public List<SerieRating> getRatings() {
+        return serieRatings;
     }
 
-    public void setRatings(List<FilmRating> filmRatings) {
-        this.filmRatings = filmRatings;
+    public void setRatings(List<SerieRating> serieRatings) {
+        this.serieRatings = serieRatings;
     }
 
-    public void add(FilmRating tempFilmRating){
+    public void add(SerieRating tempSerieRating){
 
-        if(filmRatings == null) {
-            filmRatings = new ArrayList<>();
+        if(serieRatings == null) {
+            serieRatings = new ArrayList<>();
         }
 
-        filmRatings.add(tempFilmRating);
+        serieRatings.add(tempSerieRating);
 
-        tempFilmRating.setFilm(this);
+        tempSerieRating.setSerie(this);
     }
 }

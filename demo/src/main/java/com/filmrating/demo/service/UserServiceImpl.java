@@ -1,7 +1,7 @@
 package com.filmrating.demo.service;
 
-import com.filmrating.demo.dao.FilmsRepository;
-import com.filmrating.demo.entity.Film;
+import com.filmrating.demo.dao.UserRepository;
+import com.filmrating.demo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,49 +9,49 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class FilmServiceImpl implements FilmService{
+public class UserServiceImpl implements UserService{
 
-    private FilmsRepository filmsRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public FilmServiceImpl(FilmsRepository theFilmRepository) {
-        filmsRepository = theFilmRepository;
+    public UserServiceImpl(UserRepository theUserRepository) {
+        userRepository = theUserRepository;
     }
 
     @Override
-    public List<Film> findAll(String keyword) {
-
-        if(keyword != null){
-            return filmsRepository.findByKeyword(keyword);
-        }
-        return filmsRepository.findAll();
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
-    public Film findById(int theId) {
-        Optional<Film> result = filmsRepository.findById(theId);
+    public User findById(int theId) {
+        Optional<User> result = userRepository.findById(theId);
 
-        Film theFilm = null;
+        User theUser = null;
 
         if (result.isPresent()) {
-            theFilm = result.get();
+            theUser = result.get();
         }
         else {
-            // we didn't find the employee
-            throw new RuntimeException("Did not find employee id - " + theId);
+            throw new RuntimeException("Did not find user id - " + theId);
         }
 
-        return theFilm;
+        return theUser;
     }
 
     @Override
-    public void save(Film theFilm) {
-        filmsRepository.save(theFilm);
+    public void save(User theUser) {
+        userRepository.save(theUser);
     }
 
     @Override
     public void deleteById(int theId) {
-        filmsRepository.deleteById(theId);
+        userRepository.deleteById(theId);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
 }

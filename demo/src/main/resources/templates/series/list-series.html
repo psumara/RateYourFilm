@@ -14,10 +14,10 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Rate Your Film</a>
+                <a class="navbar-brand" href="#">Rate Your Serie</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a th:href="@{/films/list}">Home</a></li>
+                <li class="active"><a th:href="@{/series/list}">Home</a></li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Page 1-1</a></li>
@@ -43,14 +43,14 @@
 
     <!-- Add button -->
     <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <a th:href="@{/films/showFormForAdd}"
+        <a th:href="@{/series/showFormForAdd}"
            class="btn btn-primary btn-sm mb-3">
-            Add Film
+            Add Serie
         </a>
     </div>
 
     <!-- Add search button -->
-    <form th:action="@{/films/list}" action="search" method="GET">
+    <form th:action="@{/series/list}" action="search" method="GET">
         <input id="txtSearch" type="text" name="keyword">
         <button type="submit">Search</button>
         <button type="button" onclick="clearSearch()">Clear</button>
@@ -58,7 +58,7 @@
 
     <script type="text/javascript">
         function clearSearch() {
-            window.location = "[[@{/films/list}]]";
+            window.location = "[[@{/series/list}]]";
         }
     </script>
 
@@ -74,20 +74,20 @@
         </thead>
 
         <tbody>
-        <tr th:each="tempFilm : ${films}">
+        <tr th:each="tempSerie : ${series}">
 
-            <td th:text="${tempFilm.title}" />
-            <td th:text="${tempFilm.release_year}" />
+            <td th:text="${tempSerie.title}" />
+            <td th:text="${tempSerie.release_year}" />
             <td>
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
 
 
-                    <a th:href="@{/films/showFormForUpdate(filmId=${tempFilm.id})}"
+                    <a th:href="@{/series/showFormForUpdate(serieId=${tempSerie.id})}"
                        class="btn btn-info btn-sm">
                         Update
                     </a>
 
-                    <a th:href="@{/films/delete(filmId=${tempFilm.id})}"
+                    <a th:href="@{/series/delete(serieId=${tempSerie.id})}"
                        class="btn btn-danger btn-sm"
                        onclick="if (!(confirm('Are you sure?'))) return false">
                         Delete
@@ -95,7 +95,7 @@
                 </div>
                 <div sec:authorize="hasRole('ROLE_USER')">
 
-                    <a th:href="@{/filmRatings/showFormForFilmRate(filmId=${tempFilm.id})}"
+                    <a th:href="@{/serieRatings/showFormForSerieRate(serieId=${tempSerie.id})}"
                        class="btn btn-warning">
                         Rate
                     </a>

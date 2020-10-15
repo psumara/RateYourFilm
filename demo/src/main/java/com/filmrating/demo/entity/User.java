@@ -2,11 +2,9 @@ package com.filmrating.demo.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-@Entity(name = "users")
+@Entity
 @Table(name = "users")
 public class User {
 
@@ -20,10 +18,18 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "username")
+    private String username;
+
     @OneToMany(mappedBy = "user",
             cascade = {CascadeType.MERGE, CascadeType.DETACH,
                     CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Rating> ratings;
+    private List<FilmRating> filmRatings;
+
+    @OneToMany(mappedBy = "user",
+            cascade = {CascadeType.MERGE, CascadeType.DETACH,
+                    CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<SerieRating> serieRatings;
 
     public User(){}
 
@@ -62,31 +68,62 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public String toString() {
-        return "Users{" +
+        return "User{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", filmRatings=" + filmRatings +
+                ", serieRatings=" + serieRatings +
                 '}';
     }
 
-    public List<Rating> getRatings() {
-        return ratings;
+    public List<FilmRating> getFilmRatings() {
+        return filmRatings;
     }
 
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
+    public void setFilmRatings(List<FilmRating> filmRatings) {
+        this.filmRatings = filmRatings;
     }
 
-    public void add(Rating tempRating){
+    public List<SerieRating> getSerieRatings() {
+        return serieRatings;
+    }
 
-        if(ratings == null) {
-            ratings = new ArrayList<>();
+    public void setSerieRatings(List<SerieRating> serieRatings) {
+        this.serieRatings = serieRatings;
+    }
+
+
+    public void addFilm(FilmRating tempFilmRating){
+
+        if(filmRatings == null) {
+            filmRatings = new ArrayList<>();
         }
 
-        ratings.add(tempRating);
+        filmRatings.add(tempFilmRating);
 
-        tempRating.setUser(this);
+        tempFilmRating.setUser(this);
+    }
+
+    public void addSerie(SerieRating tempSerieRating){
+
+        if(serieRatings == null) {
+            serieRatings = new ArrayList<>();
+        }
+
+        serieRatings.add(tempSerieRating);
+
+        tempSerieRating.setUser(this);
     }
 }

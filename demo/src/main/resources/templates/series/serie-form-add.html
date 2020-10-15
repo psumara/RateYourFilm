@@ -20,7 +20,7 @@
                 <a class="navbar-brand" href="#">Rate Your Film</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a th:href="@{/films/list}">Home</a></li>
+                <li class="active"><a th:href="@{/series/list}">Home</a></li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Page 1-1</a></li>
@@ -38,10 +38,10 @@
         </div>
     </nav>
 
-    <p class="h4 mb-4">Add Film</p>
+    <p class="h4 mb-4">Add Serie</p>
 
-    <form action="#" th:action="@{/films/save}"
-                     th:object="${film}" method="post">
+    <form action="#" th:action="@{/series/save}"
+                     th:object="${serie}" method="post">
         <input type="hidden" th:field="*{id}">
 
         <input type="text" th:field="*{title}"
@@ -53,7 +53,7 @@
 
     </form>
     <hr>
-    <a th:href="@{/films/list}">Back to list</a>
+    <a th:href="@{/series/list}">Back to list</a>
 </div>
 </body>
 

@@ -1,12 +1,13 @@
 package com.filmrating.demo.controller;
 
+
 import com.filmrating.demo.entity.Film;
 import com.filmrating.demo.service.FilmService;
+import com.filmrating.demo.service.UserService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 
@@ -15,9 +16,11 @@ import java.util.List;
 public class FilmController {
 
     private FilmService filmService;
+    private UserService userService;
 
-    public FilmController(FilmService theFilmService) {
+    public FilmController(FilmService theFilmService, UserService theUserService) {
         filmService = theFilmService;
+        userService = theUserService;
     }
 
     @GetMapping("/list")
@@ -49,15 +52,6 @@ public class FilmController {
         return "films/film-form-update";
     }
 
-    @GetMapping("/showFormForRate")
-    public String showFormForRate(@RequestParam("filmId")int theId, Model theModel) {
-
-        Film theFilm = filmService.findById(theId);
-
-        theModel.addAttribute("film", theFilm);
-
-        return "films/film-form-rate";
-    }
 
     @PostMapping("/save")
     public String saveFilm(@ModelAttribute("film") Film theFilm){
