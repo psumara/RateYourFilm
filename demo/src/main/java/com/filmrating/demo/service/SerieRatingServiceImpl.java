@@ -1,7 +1,9 @@
 package com.filmrating.demo.service;
 
 import com.filmrating.demo.dao.SerieRatingRepository;
+import com.filmrating.demo.entity.Serie;
 import com.filmrating.demo.entity.SerieRating;
+import com.filmrating.demo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,5 +52,19 @@ public class SerieRatingServiceImpl implements SerieRatingService {
     public void deleteById(int theId) {
         serieRatingRepository.deleteById(theId);
     }
+
+    @Override
+    public SerieRating findByUserAndSerie(User theUser, Serie theSerie) {
+        return serieRatingRepository.findByUserAndSerie(theUser, theSerie);
+    }
+
+    @Override
+    public boolean existsByUser(User theUser) {
+        return serieRatingRepository.existsByUser(theUser);
+    }
+
+
+
+
 
 }

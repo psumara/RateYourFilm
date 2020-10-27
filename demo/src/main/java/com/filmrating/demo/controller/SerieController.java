@@ -28,6 +28,7 @@ public class SerieController {
 
         List<Serie> theSeries = serieService.findAll(keyword);
         theModel.addAttribute("series", theSeries);
+        theModel.addAttribute("ratings", theSeries);
         theModel.addAttribute("keyword", keyword);
 
         return "series/list-series";

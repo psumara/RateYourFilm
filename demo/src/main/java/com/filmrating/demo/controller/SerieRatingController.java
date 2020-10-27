@@ -33,9 +33,6 @@ public class SerieRatingController {
     @GetMapping("/showFormForSerieRate")
     public String showFormForSerieRate(@RequestParam("serieId")int theId, String value, Model theModel) {
         String username;
-        Serie theSerie = serieService.findById(theId);
-
-        List<SerieRating> serieRatingList = new ArrayList<>();
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal instanceof UserDetails){
@@ -46,16 +43,30 @@ public class SerieRatingController {
         }
 
         User theUser = userService.findByUsername(username);
-        theUser.setUsername(username);
 
-        SerieRating serieRating = new SerieRating(StringUtils.isNotBlank(value) ? Integer.parseInt(value) : 0, theSerie, theUser);
-        serieRatingList.add(serieRating);
+        Serie theSerie = serieService.findById(theId);
+
+        SerieRating theSerieRating;
+
+        List<SerieRating> serieRatingList = theSerie.getRatings();
+
+
+        if(serieRatingService.existsByUser(theUser) == true)
+        {
+            theSerieRating = serieRatingService.findByUserAndSerie(theUser, theSerie);
+        }
+
+        else {
+            theSerieRating = new SerieRating(StringUtils.isNotBlank(value) ? Integer.parseInt(value) : 0, theSerie, theUser);
+        }
+        serieRatingList.add(theSerieRating);
         theSerie.setRatings(serieRatingList);
 
 
         theModel.addAttribute("serie", theSerie);
         theModel.addAttribute("value", value);
-        theModel.addAttribute("serieRating", serieRating);
+        theModel.addAttribute("serieRating", theSerieRating);
+
 
         return "series/serie-form-rate";
     }

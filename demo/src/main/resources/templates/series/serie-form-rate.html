@@ -36,7 +36,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a><span class="glyphicon glyphicon-user"></span><span sec:authentication="name"></span></a></li>
-                <li><a href="/showMyLoginPage" th:action="@{/logout}" method = "POST"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="/showMyLoginPage?logout" th:action="@{/logout}" method = "POST"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -56,11 +56,21 @@
         <div class="rate">
             <input type="hidden"  name="filmId" th:value="${serie.id}" th:field="*{serie}">
             <input type="hidden"  name="userId"  th:field="*{user}">
+            <input type="radio"  id="star10" name="rate" value="10" th:field="*{serieRating}" />
+            <label for="star10" >5 stars</label>
+            <input type="radio"  id="star9" name="rate" value="9" th:field="*{serieRating}"/>
+            <label for="star9" >4 stars</label>
+            <input type="radio"  id="star8" name="rate" value="8" th:field="*{serieRating}" />
+            <label for="star8" >3 stars</label>
+            <input type="radio"  id="star7" name="rate" value="7" th:field="*{serieRating}"/>
+            <label for="star7" >2 stars</label>
+            <input type="radio"  id="star6" name="rate" value="6" th:field="*{serieRating}"/>
+            <label for="star6" >1 star</label>
             <input type="radio"  id="star5" name="rate" value="5" th:field="*{serieRating}" />
             <label for="star5" >5 stars</label>
             <input type="radio"  id="star4" name="rate" value="4" th:field="*{serieRating}"/>
             <label for="star4" >4 stars</label>
-            <input type="radio"  id="star3" name="rate" value="3"th:field="*{serieRating}" />
+            <input type="radio"  id="star3" name="rate" value="3" th:field="*{serieRating}" />
             <label for="star3" >3 stars</label>
             <input type="radio"  id="star2" name="rate" value="2" th:field="*{serieRating}"/>
             <label for="star2" >2 stars</label>

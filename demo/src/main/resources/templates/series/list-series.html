@@ -14,7 +14,7 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Rate Your Serie</a>
+                <a class="navbar-brand" href="#">Rate Your Film</a>
             </div>
             <ul class="nav navbar-nav">
                 <li class="active"><a th:href="@{/series/list}">Home</a></li>
@@ -30,7 +30,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a><span class="glyphicon glyphicon-user"></span><span sec:authentication="name"></span></a></li>
-                <li><a href="/showMyLoginPage" th:action="@{/logout}" method = "POST"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="/showMyLoginPage?logout" th:action="@{/logout}" method = "POST"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
     </nav>
@@ -68,6 +68,7 @@
         <tr>
             <th>Title</th>
             <th>Release Year</th>
+            <th>Current Rate</th>
             <th>Action</th>
 
         </tr>
@@ -78,6 +79,9 @@
 
             <td th:text="${tempSerie.title}" />
             <td th:text="${tempSerie.release_year}" />
+            <td>
+
+            </td>
             <td>
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
 
