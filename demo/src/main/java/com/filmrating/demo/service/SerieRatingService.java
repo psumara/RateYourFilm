@@ -17,6 +17,8 @@ public interface SerieRatingService {
 
     public SerieRating findByUserAndSerie(User theUser, Serie theSerie);
 
+    public SerieRating findByUser(User theUser);
+
     boolean  existsByUser(User theUser);
 
 

@@ -2,6 +2,7 @@ package com.filmrating.demo.controller;
 
 import com.filmrating.demo.entity.Film;
 import com.filmrating.demo.entity.FilmRating;
+import com.filmrating.demo.entity.SerieRating;
 import com.filmrating.demo.entity.User;
 import com.filmrating.demo.service.FilmService;
 import com.filmrating.demo.service.FilmRatingService;
@@ -32,10 +33,8 @@ public class FilmRatingController {
 
     @GetMapping("/showFormForFilmRate")
     public String showFormForFilmRate(@RequestParam("filmId")int theId, String value, Model theModel) {
-        String username;
-        Film theFilm = filmService.findById(theId);
 
-        List<FilmRating> filmRatingList = new ArrayList<>();
+        String username;
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal instanceof UserDetails){
@@ -44,18 +43,29 @@ public class FilmRatingController {
         else {
             username = principal.toString();
         }
-
         User theUser = userService.findByUsername(username);
-        theUser.setUsername(username);
 
-        FilmRating filmRating = new FilmRating(StringUtils.isNotBlank(value) ? Integer.parseInt(value) : 0, theFilm, theUser);
-        filmRatingList.add(filmRating);
+        Film theFilm = filmService.findById(theId);
+
+        FilmRating theFilmRating;
+
+        List<FilmRating> filmRatingList = theFilm.getRatings();
+
+        if(filmRatingService.findByUserAndFilm(theUser, theFilm) != null)
+        {
+            theFilmRating = filmRatingService.findByUserAndFilm(theUser, theFilm);
+        }
+
+        else {
+            theFilmRating = new FilmRating(StringUtils.isNotBlank(value) ? Integer.parseInt(value) : 0, theFilm, theUser);
+        }
+
+        filmRatingList.add(theFilmRating);
         theFilm.setRatings(filmRatingList);
-
 
         theModel.addAttribute("film", theFilm);
         theModel.addAttribute("value", value);
-        theModel.addAttribute("filmRating", filmRating);
+        theModel.addAttribute("filmRating", theFilmRating);
 
         return "films/film-form-rate";
     }

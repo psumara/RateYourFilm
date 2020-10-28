@@ -9,6 +9,8 @@ public interface SerieRatingRepository extends JpaRepository<SerieRating, Intege
 
     public SerieRating findByUserAndSerie(User theUser, Serie theSerie);
 
+    public SerieRating findByUser(User theUser);
+
     boolean existsByUser(User theUser);
 
 

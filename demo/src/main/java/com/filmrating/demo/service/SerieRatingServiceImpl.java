@@ -59,6 +59,11 @@ public class SerieRatingServiceImpl implements SerieRatingService {
     }
 
     @Override
+    public SerieRating findByUser(User theUser) {
+        return serieRatingRepository.findByUser(theUser);
+    }
+
+    @Override
     public boolean existsByUser(User theUser) {
         return serieRatingRepository.existsByUser(theUser);
     }

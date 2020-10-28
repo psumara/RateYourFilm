@@ -54,18 +54,18 @@
     <form action="#" th:action="@{/serieRatings/saveSerieRating}"
                      th:object="${serieRating}" method="post">
         <div class="rate">
-            <input type="hidden"  name="filmId" th:value="${serie.id}" th:field="*{serie}">
+            <input type="hidden"  name="serieId" th:value="${serie.id}" th:field="*{serie}">
             <input type="hidden"  name="userId"  th:field="*{user}">
             <input type="radio"  id="star10" name="rate" value="10" th:field="*{serieRating}" />
-            <label for="star10" >5 stars</label>
+            <label for="star10" >10 stars</label>
             <input type="radio"  id="star9" name="rate" value="9" th:field="*{serieRating}"/>
-            <label for="star9" >4 stars</label>
+            <label for="star9" >9 stars</label>
             <input type="radio"  id="star8" name="rate" value="8" th:field="*{serieRating}" />
-            <label for="star8" >3 stars</label>
+            <label for="star8" >8 stars</label>
             <input type="radio"  id="star7" name="rate" value="7" th:field="*{serieRating}"/>
-            <label for="star7" >2 stars</label>
+            <label for="star7" >7 stars</label>
             <input type="radio"  id="star6" name="rate" value="6" th:field="*{serieRating}"/>
-            <label for="star6" >1 star</label>
+            <label for="star6" >6 star</label>
             <input type="radio"  id="star5" name="rate" value="5" th:field="*{serieRating}" />
             <label for="star5" >5 stars</label>
             <input type="radio"  id="star4" name="rate" value="4" th:field="*{serieRating}"/>

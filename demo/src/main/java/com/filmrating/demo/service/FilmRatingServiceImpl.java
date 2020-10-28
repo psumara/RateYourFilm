@@ -1,7 +1,9 @@
 package com.filmrating.demo.service;
 
 import com.filmrating.demo.dao.FilmRatingRepository;
+import com.filmrating.demo.entity.Film;
 import com.filmrating.demo.entity.FilmRating;
+import com.filmrating.demo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +51,11 @@ public class FilmRatingServiceImpl implements FilmRatingService {
     @Override
     public void deleteById(int theId) {
         filmRatingRepository.deleteById(theId);
+    }
+
+    @Override
+    public FilmRating findByUserAndFilm(User theUser, Film theFilm) {
+        return filmRatingRepository.findByUserAndFilm(theUser, theFilm);
     }
 
 }

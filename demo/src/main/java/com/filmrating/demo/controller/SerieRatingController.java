@@ -32,6 +32,7 @@ public class SerieRatingController {
 
     @GetMapping("/showFormForSerieRate")
     public String showFormForSerieRate(@RequestParam("serieId")int theId, String value, Model theModel) {
+
         String username;
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -51,7 +52,7 @@ public class SerieRatingController {
         List<SerieRating> serieRatingList = theSerie.getRatings();
 
 
-        if(serieRatingService.existsByUser(theUser) == true)
+        if(serieRatingService.findByUserAndSerie(theUser, theSerie) != null)
         {
             theSerieRating = serieRatingService.findByUserAndSerie(theUser, theSerie);
         }
@@ -62,10 +63,10 @@ public class SerieRatingController {
         serieRatingList.add(theSerieRating);
         theSerie.setRatings(serieRatingList);
 
-
         theModel.addAttribute("serie", theSerie);
         theModel.addAttribute("value", value);
         theModel.addAttribute("serieRating", theSerieRating);
+
 
 
         return "series/serie-form-rate";
